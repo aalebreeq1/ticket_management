@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ============================================================ -->
+        <!-- DEMO USERS (Support Agents)                                  -->
+        <!-- ============================================================ -->
+        <record id="user_agent_ali" model="res.users">
+            <field name="name">Ali Hassan</field>
+            <field name="login">ali.h@example.com</field>
+            <field name="email">ali.h@example.com</field>
+        </record>
+
+        <record id="user_agent_hussain" model="res.users">
+            <field name="name">Hussain Ahmed</field>
+            <field name="login">hussain.a@example.com</field>
+            <field name="email">hussain.a@example.com</field>
+        </record>
+
+        <!-- ASSIGN USERS TO INTERNAL USER GROUP VIA RES.GROUPS -->
+        <record id="base.group_user" model="res.groups">
+            <field name="users" eval="[(4, ref('user_agent_ali')), (4, ref('user_agent_hussain'))]"/>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- DEMO PARTNERS                                                -->
+        <!-- ============================================================ -->
+        <record id="partner_demo_azure" model="res.partner">
+            <field name="name">Azure Interior</field>
+            <field name="email">azure.interior@example.com</field>
+            <field name="phone">+1 (555) 019-2834</field>
+        </record>
+
+        <record id="partner_demo_deco" model="res.partner">
+            <field name="name">Deco Addict</field>
+            <field name="email">deco.addict@example.com</field>
+            <field name="phone">+1 (555) 018-9921</field>
+        </record>
+
+        <record id="partner_demo_delta" model="res.partner">
+            <field name="name">Delta PC</field>
+            <field name="email">delta.pc@example.com</field>
+            <field name="phone">+1 (555) 012-4410</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- CATEGORIES                                                   -->
+        <!-- ============================================================ -->
+        <record id="category_hardware" model="ticket.category">
+            <field name="name">Hardware &amp; Equipment</field>
+            <field name="description">Physical devices, workstation setups, and peripherals.</field>
+            <field name="color">2</field>
+        </record>
+
+        <record id="category_software" model="ticket.category">
+            <field name="name">Software &amp; Access</field>
+            <field name="description">Application bugs, portal permissions, and ERP access issues.</field>
+            <field name="color">4</field>
+        </record>
+
+        <record id="category_network" model="ticket.category">
+            <field name="name">Network &amp; Security</field>
+            <field name="description">VPN connectivity, Wi-Fi performance, and firewall updates.</field>
+            <field name="color">1</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- TAGS                                                         -->
+        <!-- ============================================================ -->
+        <record id="tag_urgent" model="ticket.tag">
+            <field name="name">Urgent</field>
+            <field name="color">1</field>
+        </record>
+
+        <record id="tag_bug" model="ticket.tag">
+            <field name="name">Bug</field>
+            <field name="color">3</field>
+        </record>
+
+        <record id="tag_feature" model="ticket.tag">
+            <field name="name">Feature Request</field>
+            <field name="color">5</field>
+        </record>
+
+        <record id="tag_vip" model="ticket.tag">
+            <field name="name">VIP Customer</field>
+            <field name="color">7</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- STAGES                                                       -->
+        <!-- ============================================================ -->
+        <record id="stage_new" model="ticket.stage">
+            <field name="name">New</field>
+            <field name="sequence">10</field>
+            <field name="state">draft</field>
+            <field name="is_closed">False</field>
+        </record>
+
+        <record id="stage_in_progress" model="ticket.stage">
+            <field name="name">In Progress</field>
+            <field name="sequence">20</field>
+            <field name="state">in_progress</field>
+            <field name="is_closed">False</field>
+        </record>
+
+        <record id="stage_pending" model="ticket.stage">
+            <field name="name">Pending Customer</field>
+            <field name="sequence">30</field>
+            <field name="state">in_progress</field>
+            <field name="is_closed">False</field>
+        </record>
+
+        <record id="stage_resolved" model="ticket.stage">
+            <field name="name">Resolved</field>
+            <field name="sequence">40</field>
+            <field name="state">done</field>
+            <field name="is_closed">True</field>
+        </record>
+
+        <record id="stage_cancelled" model="ticket.stage">
+            <field name="name">Cancelled</field>
+            <field name="sequence">50</field>
+            <field name="state">cancelled</field>
+            <field name="is_closed">True</field>
+        </record>
+
+        <!-- ============================================================ -->
+        <!-- TICKETS                                                      -->
+        <!-- ============================================================ -->
+        <record id="ticket_demo_1" model="ticket.ticket">
+            <field name="name">TCK/00001</field>
+            <field name="partner_id" ref="partner_demo_azure"/>
+            <field name="category_id" ref="category_software"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('tag_urgent'), ref('tag_bug')])]"/>
+            <field name="user_id" ref="user_agent_ali"/>
+            <field name="priority">3</field>
+            <field name="stage_id" ref="stage_in_progress"/>
+            <field name="description"><![CDATA[
+                <p><strong>Issue Summary:</strong> Customer is unable to log into the Service Portal.</p>
+                <p><strong>Error Message:</strong> <code>500 Internal Server Error - Token Validation Failed</code>.</p>
+                <p><strong>Steps taken:</strong> Verified database connection; restarting user session did not resolve.</p>
+            ]]></field>
+        </record>
+
+        <record id="ticket_demo_2" model="ticket.ticket">
+            <field name="name">TCK/00002</field>
+            <field name="partner_id" ref="partner_demo_deco"/>
+            <field name="category_id" ref="category_hardware"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('tag_vip')])]"/>
+            <field name="user_id" ref="user_agent_hussain"/>
+            <field name="priority">2</field>
+            <field name="stage_id" ref="stage_new"/>
+            <field name="description"><![CDATA[
+                <p><strong>Issue Summary:</strong> Workstation dual-monitor setup fails to detect secondary display via DisplayPort adapter.</p>
+            ]]></field>
+        </record>
+
+        <record id="ticket_demo_3" model="ticket.ticket">
+            <field name="name">TCK/00003</field>
+            <field name="partner_id" ref="partner_demo_delta"/>
+            <field name="category_id" ref="category_network"/>
+            <field name="tag_ids" eval="[(6, 0, [ref('tag_feature')])]"/>
+            <field name="user_id" ref="user_agent_ali"/>
+            <field name="priority">1</field>
+            <field name="stage_id" ref="stage_resolved"/>
+            <field name="description"><![CDATA[
+                <p><strong>Request:</strong> Grant corporate VPN access credentials for three new remote audit team members.</p>
+                <p><strong>Status:</strong> Provisioning complete, credentials sent securely.</p>
+            ]]></field>
+        </record>
+
+    </data>
+</odoo>
