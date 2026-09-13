@@ -46,58 +46,53 @@
         </record>
 
 
-        <!-- ==================== MENU HIERARCHY ==================== -->
+        <!-- ==================== MENU  ==================== -->
 
-        <!-- Top-Level Root Menu -->
         <menuitem id="menu_ticket_root"
-                  name="Tickets"
-                  web_icon="ticket_management,static/description/icon.png"
-                  sequence="10"/>
+            name="Tickets"
+            sequence="10" />
 
-        <!-- Operations Category Menu -->
         <menuitem id="menu_ticket_operations"
-                  name="Tickets"
-                  parent="menu_ticket_root"
-                  sequence="10"/>
+            name="Tickets"
+            parent="menu_ticket_root"
+            sequence="10" />
 
-        <!-- Operations Sub-Menus -->
         <menuitem id="menu_ticket_all"
-                  name="All Tickets"
-                  parent="menu_ticket_operations"
-                  action="action_ticket_all"
-                  sequence="10"/>
+            name="All Tickets"
+            parent="menu_ticket_operations"
+            action="action_ticket_all"
+            groups="group_ticket_manager"
+            sequence="10" />
 
         <menuitem id="menu_ticket_my"
-                  name="My Tickets"
-                  parent="menu_ticket_operations"
-                  action="action_ticket_my"
-                  sequence="20"/>
+            name="My Tickets"
+            parent="menu_ticket_operations"
+            action="action_ticket_my"
+            sequence="20" />
 
-        <!-- Configuration Category Menu (Restricted to Managers) -->
         <menuitem id="menu_ticket_configuration"
-                  name="Configuration"
-                  parent="menu_ticket_root"
-                  groups="group_ticket_manager"
-                  sequence="100"/>
+            name="Configuration"
+            parent="menu_ticket_root"
+            groups="group_ticket_manager"
+            sequence="100" />
 
-        <!-- Configuration Sub-Menus -->
         <menuitem id="menu_ticket_category"
-                  name="Categories"
-                  parent="menu_ticket_configuration"
-                  action="action_ticket_category"
-                  sequence="10"/>
+            name="Categories"
+            parent="menu_ticket_configuration"
+            action="action_ticket_category"
+            sequence="10" />
 
         <menuitem id="menu_ticket_stage"
-                  name="Stages"
-                  parent="menu_ticket_configuration"
-                  action="action_ticket_stage"
-                  sequence="20"/>
+            name="Stages"
+            parent="menu_ticket_configuration"
+            action="action_ticket_stage"
+            sequence="20" />
 
         <menuitem id="menu_ticket_tag"
-                  name="Tags"
-                  parent="menu_ticket_configuration"
-                  action="action_ticket_tag"
-                  sequence="30"/>
+            name="Tags"
+            parent="menu_ticket_configuration"
+            action="action_ticket_tag"
+            sequence="30" />
 
     </data>
 </odoo>

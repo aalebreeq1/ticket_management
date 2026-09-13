@@ -9,7 +9,41 @@
             <field name="arch" type="xml">
                 <form string="Ticket">
                     <header>
-                        <!-- Statusbar widget driven by stage_id with clickable transitions -->
+                        <button name="action_in_progress"
+                            type="object"
+                            class="oe_highlight"
+                            string="In Progress"
+                            icon="fa-spinner"
+                            invisible="stage_id != 1"
+                        />
+                        <button name="action_pending_customer"
+                            type="object"
+                            class="btn-warning"
+                            string="Pending Customer"
+                            icon="fa-clock-o"
+                            invisible="stage_id != 2"
+                        />
+                        <button name="action_resolved"
+                            type="object"
+                            class="btn-success"
+                            string="Resolved"
+                            icon="fa-check"
+                            invisible="stage_id != 3"
+                        />
+                        <button name="action_cancelled"
+                            type="object"
+                            class="btn-danger"
+                            string="Cancel Ticket"
+                            icon="fa-ban"
+                            invisible="stage_id not in [1, 2, 3]"
+                        />
+                        <button name='action_reset_to_new'
+                            type="object"
+                            class="btn-secondary"
+                            icon="fa-undo"
+                            string="Reset to New"
+                            invisible="stage_id == 1"
+                        />
                         <field name="stage_id" widget="statusbar" options="{'fold_field': 'fold'}"
                             options_clickable="1" />
                     </header>
@@ -29,6 +63,7 @@
                             <group name="right_details">
                                 <field name="user_id" widget="many2one_avatar_user" />
                                 <field name="priority" widget="priority" />
+                                <field name="stage_id" />
                             </group>
                         </group>
                         <notebook>
@@ -48,7 +83,6 @@
             </field>
         </record>
 
-        <!-- List View (Odoo 17+ uses <list> instead of <tree>) -->
         <record id="ticket_view_list" model="ir.ui.view">
             <field name="name">ticket.ticket.view.list</field>
             <field name="model">ticket.ticket</field>
@@ -60,6 +94,7 @@
                     <field name="user_id" widget="many2one_avatar_user" />
                     <field name="priority" widget="priority" />
                     <field name="stage_id" />
+                    <field name="description" />
                 </list>
             </field>
         </record>

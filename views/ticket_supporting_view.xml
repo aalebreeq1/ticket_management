@@ -45,7 +45,6 @@
                         <group>
                             <group>
                                 <field name="name"/>
-                                <field name="state"/>
                             </group>
                             <group>
                                 <field name="sequence"/>
@@ -64,7 +63,6 @@
                 <list string="Stages">
                     <field name="sequence" widget="handle"/>
                     <field name="name"/>
-                    <field name="state"/>
                     <field name="is_closed"/>
                 </list>
             </field>

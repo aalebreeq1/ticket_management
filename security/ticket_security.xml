@@ -5,14 +5,14 @@
         <!-- User Group -->
         <record id="group_ticket_user" model="res.groups">
             <field name="name">Ticket / User</field>
-            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
         </record>
 
         <!-- Manager Group -->
         <record id="group_ticket_manager" model="res.groups">
             <field name="name">Ticket / Manager</field>
-            <field name="implied_ids" eval="[(4, ref('group_ticket_user'))]"/>
+            <field name="implied_ids" eval="[(4, ref('group_ticket_user'))]" />
         </record>
+
 
     </data>
 </odoo>
