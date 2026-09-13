@@ -9,6 +9,13 @@
             <field name="arch" type="xml">
                 <form string="Ticket">
                     <header>
+                        <button name="action_set_new"
+                            type="object"
+                            class="btn-success"
+                            icon="fa-plus"
+                            string="Set to New"
+                            invisible="stage_id == 1"
+                        />
                         <button name="action_in_progress"
                             type="object"
                             class="oe_highlight"

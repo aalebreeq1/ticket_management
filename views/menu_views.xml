@@ -4,7 +4,6 @@
 
         <!-- ==================== WINDOW ACTIONS ==================== -->
 
-        <!-- 1. All Tickets Action -->
         <record id="action_ticket_all" model="ir.actions.act_window">
             <field name="name">All Tickets</field>
             <field name="res_model">ticket.ticket</field>
@@ -16,7 +15,6 @@
             </field>
         </record>
 
-        <!-- 2. My Tickets Action (Pre-filtered) -->
         <record id="action_ticket_my" model="ir.actions.act_window">
             <field name="name">My Tickets</field>
             <field name="res_model">ticket.ticket</field>
@@ -24,21 +22,18 @@
             <field name="context">{'search_default_my_tickets': 1}</field>
         </record>
 
-        <!-- 3. Categories Action -->
         <record id="action_ticket_category" model="ir.actions.act_window">
             <field name="name">Categories</field>
             <field name="res_model">ticket.category</field>
             <field name="view_mode">list,form</field>
         </record>
 
-        <!-- 4. Stages Action -->
         <record id="action_ticket_stage" model="ir.actions.act_window">
             <field name="name">Stages</field>
             <field name="res_model">ticket.stage</field>
             <field name="view_mode">list,form</field>
         </record>
 
-        <!-- 5. Tags Action -->
         <record id="action_ticket_tag" model="ir.actions.act_window">
             <field name="name">Tags</field>
             <field name="res_model">ticket.tag</field>

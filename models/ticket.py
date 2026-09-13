@@ -49,27 +49,8 @@ class TicketTicket(models.Model):
     def action_reset_to_new(self):
         for record in self:
             record.write({"stage_id": 1})
+    
+    def action_set_new(self):
+        for record in self:
+            record.write({"stage_id": 1})
 
-
-class TicketCategory(models.Model):
-    _name = "ticket.category"
-    _description = "Ticket Category"
-
-    name = fields.Char(string="Category Name", required=True)
-
-
-class TicketTag(models.Model):
-    _name = "ticket.tag"
-    _description = "Ticket Tag"
-
-    name = fields.Char(string="Tag Name", required=True)
-    color = fields.Integer(string="Color Index")
-
-
-class TicketStage(models.Model):
-    _name = "ticket.stage"
-    _description = "Ticket Stage"
-    _order = "sequence, id"
-
-    name = fields.Char(string="Stage Name", required=True)
-    sequence = fields.Integer(string="Sequence", default=10)
