@@ -15,10 +15,11 @@
         'security/ir.model.access.csv',
         'security/ticket_record_rules.xml',
         'data/ticket_sequence.xml',
-        'views/ticket_supporting_view.xml',
         'views/ticket_views.xml',
+        'views/category_views.xml',
+        'views/stage_views.xml',
+        'views/tag_views.xml',
         'views/menu_views.xml',
-        'data/ticket_demo.xml',
         
     ],
 

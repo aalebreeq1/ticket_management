@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
+    <data >
 
-        <!-- Ticket Auto-Sequence Record -->
         <record id="ticket_sequence" model="ir.sequence">
             <field name="name">Ticket Sequence</field>
             <field name="code">ticket.ticket</field>

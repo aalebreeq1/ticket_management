@@ -1,4 +1,5 @@
-from odoo import models, fields, api
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError, UserError
 
 
 class TicketTicket(models.Model):
@@ -6,9 +7,15 @@ class TicketTicket(models.Model):
     _description = "Support Ticket"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
-    name = fields.Char(string="Title", default="New Ticket", tracking=True)
+    ticket_id = fields.Char(
+        string="Ticket ID",
+        readonly=True,
+        tracking=True,
+        copy=False,
+        default=lambda self: _("New"),
+    )
+    title = fields.Char(string="Ticket Title", tracking=True)
     description = fields.Html(string="Description")
-
     partner_id = fields.Many2one("res.partner", string="Customer", tracking=True)
     user_id = fields.Many2one(
         "res.users",
@@ -18,6 +25,7 @@ class TicketTicket(models.Model):
     )
     category_id = fields.Many2one("ticket.category", string="Category")
     stage_id = fields.Many2one("ticket.stage", string="Stage", tracking=True)
+    stage_code=fields.Char(string="Stage Name", related="stage_id.code", store=True)
     tag_ids = fields.Many2many("ticket.tag", string="Tags")
 
     priority = fields.Selection(
@@ -27,30 +35,44 @@ class TicketTicket(models.Model):
         tracking=True,
     )
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("ticket_id", _("New")) == _("New"):
+                vals["ticket_id"] = self.env["ir.sequence"].next_by_code(
+                    "ticket.ticket"
+                ) or _("New")
+        return super().create(vals_list)
+
+    def _set_stage(self, code):
+        stage = self.env["ticket.stage"].search([("code", "=", code)], limit=1)
+        if stage:
+            self.write({"stage_id": stage.id})
+
+    def action_draft(self):
+        for record in self:
+            record._set_stage("draft")
+
+    def action_new(self):
+        for record in self:
+            if record.stage_code == "draft":
+                record._set_stage("new")
+
     def action_in_progress(self):
         for record in self:
-            if record.stage_id.name == "New" or record.stage_id == 1:
-                record.write({"stage_id": 2})
-
-    def action_pending_customer(self):
-        for record in self:
-            if record.stage_id.name == "In Progress" or record.stage_id == 2:
-                record.write({"stage_id": 3})
+            if record.stage_code == "new":
+                record._set_stage("in_progress")
 
     def action_resolved(self):
         for record in self:
-            if record.stage_id.name == "Pending Customer" or record.stage_id == 3:
-                record.write({"stage_id": 4})
+            if record.stage_code == "in_progress":
+                record._set_stage("resolved")
 
     def action_cancelled(self):
         for record in self:
-            record.write({"stage_id": 5})
+            record._set_stage("cancelled")
 
-    def action_reset_to_new(self):
+    def action_reset_to_draft(self):
         for record in self:
-            record.write({"stage_id": 1})
-    
-    def action_set_new(self):
-        for record in self:
-            record.write({"stage_id": 1})
-
+            if record.stage_code in ("resolved", "cancelled"):
+                record._set_stage("draft")

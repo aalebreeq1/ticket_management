@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ticket_category_view_form" model="ir.ui.view">
+            <field name="name">ticket.category.view.form</field>
+            <field name="model">ticket.category</field>
+            <field name="arch" type="xml">
+                <form string="Category">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                                <field name="code" />
+                                <field name="color" widget="color_picker" />
+                            </group>
+                            <group>
+                                <field name="description" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ticket_category_view_list" model="ir.ui.view">
+            <field name="name">ticket.category.view.list</field>
+            <field name="model">ticket.category</field>
+            <field name="arch" type="xml">
+                <list string="Categories">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="color" widget="color_picker" />
+                    <field name="description" />
+                </list>
+            </field>
+        </record>
+    </data>
+</odoo>
