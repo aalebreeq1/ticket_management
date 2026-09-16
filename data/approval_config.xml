@@ -1,0 +1,47 @@
+<odoo>
+    <data noupdate="1">
+        <record id="approval_settings_ticket_management" model="approval.settings">
+            <field name="model_id" ref="model_ticket_ticket" />
+        </record>
+
+        <record id="approval_todo" model="approval.config">
+            <field name="model_id" ref="model_ticket_ticket" />
+            <field name="state">todo</field>
+            <field name="name">TODO</field>
+            <field name="sequence">10</field>
+            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
+            <field name="condition">True</field>
+            <field name="schedule_activity" eval="True" />
+        </record>
+
+        <record id="approval_in_progress" model="approval.config">
+            <field name="model_id" ref="model_ticket_ticket" />
+            <field name="state">in_progress</field>
+            <field name="name">In Progress </field>
+            <field name="sequence">11</field>
+            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_user'))]" />
+            <field name="condition">True</field>
+            <field name="schedule_activity" eval="True" />
+        </record>
+
+        <record id="approval_testing" model="approval.config">
+            <field name="model_id" ref="model_ticket_ticket" />
+            <field name="state">testing</field>
+            <field name="name">Testing</field>
+            <field name="sequence">12</field>
+            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
+            <field name="condition">True</field>
+            <field name="schedule_activity" eval="True" />
+        </record>
+
+        <record id="approval_resolved" model="approval.config">
+            <field name="model_id" ref="model_ticket_ticket" />
+            <field name="state">resolved</field>
+            <field name="name">Resolved</field>
+            <field name="sequence">13</field>
+            <field name="group_ids" eval="[(4, ref ('ticket_management.group_ticket_manager'))]" />
+            <field name="condition">True</field>
+            <field name="schedule_activity" eval="True" />
+        </record>
+    </data>
+</odoo>

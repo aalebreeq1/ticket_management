@@ -8,50 +8,8 @@
             <field name="arch" type="xml">
                 <form string="Ticket">
                     <header>
-                        <button name="action_draft"
-                            type="object"
-                            class="btn-secondary"
-                            icon="fa-undo"
-                            string="Set to Draft"
-                            invisible="stage_code != 'draft'"
-                        />
-                        <button name="action_new"
-                            type="object"
-                            class="btn-secondary"
-                            icon="fa-plus"
-                            string="Set to New"
-                            invisible="stage_code != 'draft'"
-                        />
-                        <button name="action_in_progress"
-                            type="object"
-                            class="oe_highlight"
-                            string="In Progress"
-                            icon="fa-spinner"
-                            invisible="stage_code != 'new'"
-                        />
-                        <button name="action_resolved"
-                            type="object"
-                            class="btn-success"
-                            string="Resolved"
-                            icon="fa-check"
-                            invisible="stage_code != 'in_progress'"
-                        />
-                        <button name="action_cancelled"
-                            type="object"
-                            class="btn-danger"
-                            string="Cancel Ticket"
-                            icon="fa-ban"
-                            invisible="stage_code in ('resolved', 'cancelled', False)"
-                        />
-                        <button name="action_reset_to_draft"
-                            type="object"
-                            class="btn-secondary"
-                            icon="fa-undo"
-                            string="Reset to Draft"
-                            invisible="stage_code not in ('resolved', 'cancelled')"
-                        />
-                        <field name="stage_code" invisible="1" />
-                        <field name="stage_id" widget="statusbar" />
+                        <field name="state" widget="statusbar" />
+                        <field name="user_can_approve" invisible="1" />
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -69,7 +27,6 @@
                             <group name="right_details">
                                 <field name="user_id" widget="many2one_avatar_user" />
                                 <field name="priority" widget="priority" />
-                                <field name="stage_id" />
                             </group>
                         </group>
                         <notebook>
@@ -99,7 +56,6 @@
                     <field name="category_id" />
                     <field name="user_id" widget="many2one_avatar_user" />
                     <field name="priority" widget="priority" />
-                    <field name="stage_id" />
                     <field name="description" />
                 </list>
             </field>
@@ -110,7 +66,7 @@
             <field name="name">ticket.ticket.view.kanban</field>
             <field name="model">ticket.ticket</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="stage_id" class="o_kanban_small_column" sample="1">
+                <kanban default_group_by="state" class="o_kanban_small_column" sample="1">
                     <field name="ticket_id" />
                     <field name="title" />
                     <field name="partner_id" />

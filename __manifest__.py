@@ -7,20 +7,19 @@
     'category': 'Services/Helpdesk',
     'license': 'AGPL-3',
     'depends': [
-        'base',
-        'mail',
+        'oi_workflow'
     ],
     'data': [
         'security/ticket_security.xml',
         'security/ir.model.access.csv',
         'security/ticket_record_rules.xml',
         'data/ticket_sequence.xml',
+        'data/approval_config.xml',
+        'data/approval_buttons.xml',
         'views/ticket_views.xml',
         'views/category_views.xml',
-        'views/stage_views.xml',
         'views/tag_views.xml',
         'views/menu_views.xml',
-        
     ],
 
     'installable': True,
