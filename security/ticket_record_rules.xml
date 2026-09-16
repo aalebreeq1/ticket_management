@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data >
+    <data noupdate="1">
 
         <record id="rule_ticket_user_own" model="ir.rule">
             <field name="name">User: Own or Unassigned Tickets</field>
