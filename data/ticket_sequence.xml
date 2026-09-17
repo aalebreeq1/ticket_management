@@ -6,7 +6,7 @@
             <field name="name">Ticket Sequence</field>
             <field name="code">ticket.ticket</field>
             <field name="prefix">TCK/%(year)s/</field>
-            <field name="padding">5</field>
+            <field name="padding">4</field>
             <field name="number_next">1</field>
             <field name="number_increment">1</field>
         </record>

@@ -14,7 +14,7 @@
             <field name="name">My Tickets</field>
             <field name="res_model">ticket.ticket</field>
             <field name="view_mode">kanban,list,form</field>
-            <field name="context">{'search_default_my_tickets': 1}</field>
+            <field name="domain">[('user_id', '=', uid)]</field>
         </record>
 
         <record id="action_ticket_category" model="ir.actions.act_window">

@@ -12,7 +12,6 @@
                         <field name="user_can_approve" invisible="1" />
                     </header>
                     <sheet>
-
                         <group>
                             <field name="title" placeholder="New Ticket Title..."
                                 readonly="state not in ['draft']" />
@@ -20,7 +19,7 @@
 
                         <group>
                             <group name="left_details">
-                                <field name="partner_id" />
+                                <field name="partner_id" readonly="state not in ['draft']" />
                                 <field name="category_id" readonly="state not in ['draft']" />
                                 <field name="tag_ids" widget="many2many_tags"
                                     options="{'color_field': 'color'}"
@@ -28,8 +27,9 @@
                             </group>
                             <group name="right_details">
                                 <field name="user_id" widget="many2one_avatar_user"
-                                    readonly="state not in ['draft']"
-                                />
+                                    readonly="state not in ['draft']" />
+                                <field name="responsible_manager_id" widget="many2one_avatar_user"
+                                    readonly="state not in ['draft']" />
                                 <field name="priority" widget="priority"
                                     readonly="state not in ['draft']" />
                             </group>
@@ -51,6 +51,7 @@
             </field>
         </record>
 
+        <!-- List View -->
         <record id="ticket_view_list" model="ir.ui.view">
             <field name="name">ticket.ticket.view.list</field>
             <field name="model">ticket.ticket</field>
@@ -61,8 +62,9 @@
                     <field name="partner_id" />
                     <field name="category_id" />
                     <field name="user_id" widget="many2one_avatar_user" />
+                    <field name="responsible_manager_id" widget="many2one_avatar_user" />
                     <field name="priority" widget="priority" />
-                    <field name="description" />
+                    <field name="state" widget="badge" />
                 </list>
             </field>
         </record>
@@ -78,6 +80,8 @@
                     <field name="partner_id" />
                     <field name="priority" />
                     <field name="tag_ids" />
+                    <field name="user_id" />
+                    <field name="responsible_manager_id" />
                     <templates>
                         <t t-name="card">
                             <div class="oe_kanban_global_click">
