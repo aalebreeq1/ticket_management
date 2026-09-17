@@ -9,7 +9,7 @@
         </record>
 
         <record id="button_approval_todo" model="approval.buttons">
-            <field name="name">TODO</field>
+            <field name="name">Move to in Progress</field>
             <field name="settings_id" ref="approval_settings_ticket_management" />
             <field name="config_id" ref="approval_todo" />
             <field name="visible_to">approval</field>
@@ -18,7 +18,7 @@
         </record>
 
         <record id="button_approval_in_progress" model="approval.buttons">
-            <field name="name">In Progress</field>
+            <field name="name">Move to Testing</field>
             <field name="settings_id" ref="approval_settings_ticket_management" />
             <field name="config_id" ref="approval_in_progress" />
             <field name="visible_to">approval</field>
@@ -27,7 +27,7 @@
         </record>
 
         <record id="button_approval_testing" model="approval.buttons">
-            <field name="name">Testing</field>
+            <field name="name">Mark As Resolved</field>
             <field name="settings_id" ref="approval_settings_ticket_management" />
             <field name="config_id" ref="approval_testing" />
             <field name="visible_to">approval</field>
@@ -36,12 +36,14 @@
         </record>
 
         <record id="button_approval_resolved" model="approval.buttons">
-            <field name="name">Resolved</field>
+            <field name="name">Complete</field>
             <field name="settings_id" ref="approval_settings_ticket_management" />
             <field name="config_id" ref="approval_resolved" />
             <field name="visible_to">approval</field>
             <field name="action_type">approve</field>
             <field name="button_class">btn-success</field>
         </record>
+
+
     </data>
 </odoo>

@@ -12,27 +12,33 @@
                         <field name="user_can_approve" invisible="1" />
                     </header>
                     <sheet>
-                        <div class="oe_title">
-                            <h1>
-                                <field name="title" placeholder="New Ticket Title..." />
-                            </h1>
-                        </div>
+
+                        <group>
+                            <field name="title" placeholder="New Ticket Title..."
+                                readonly="state not in ['draft']" />
+                        </group>
+
                         <group>
                             <group name="left_details">
                                 <field name="partner_id" />
-                                <field name="category_id" />
+                                <field name="category_id" readonly="state not in ['draft']" />
                                 <field name="tag_ids" widget="many2many_tags"
-                                    options="{'color_field': 'color'}" />
+                                    options="{'color_field': 'color'}"
+                                    readonly="state not in ['draft']" />
                             </group>
                             <group name="right_details">
-                                <field name="user_id" widget="many2one_avatar_user" />
-                                <field name="priority" widget="priority" />
+                                <field name="user_id" widget="many2one_avatar_user"
+                                    readonly="state not in ['draft']"
+                                />
+                                <field name="priority" widget="priority"
+                                    readonly="state not in ['draft']" />
                             </group>
                         </group>
                         <notebook>
                             <page string="Description" name="description">
                                 <field name="description" widget="html"
-                                    placeholder="Add detailed problem description..." />
+                                    placeholder="Add detailed problem description..."
+                                    readonly="state not in ['draft']" />
                             </page>
                         </notebook>
                     </sheet>
@@ -50,7 +56,7 @@
             <field name="model">ticket.ticket</field>
             <field name="arch" type="xml">
                 <list string="Tickets">
-                    <field name="ticket_id" />
+                    <field name="ticket_ref" />
                     <field name="title" />
                     <field name="partner_id" />
                     <field name="category_id" />
@@ -67,7 +73,7 @@
             <field name="model">ticket.ticket</field>
             <field name="arch" type="xml">
                 <kanban default_group_by="state" class="o_kanban_small_column" sample="1">
-                    <field name="ticket_id" />
+                    <field name="ticket_ref" />
                     <field name="title" />
                     <field name="partner_id" />
                     <field name="priority" />
@@ -80,7 +86,7 @@
                                         <field name="title" />
                                     </strong>
                                     <div>
-                                        <field name="ticket_id" />
+                                        <field name="ticket_ref" />
                                     </div>
                                 </div>
                                 <div class="o_kanban_record_body">

@@ -3,17 +3,25 @@
     <data noupdate="1">
 
         <record id="rule_ticket_user_own" model="ir.rule">
-            <field name="name">User: Own or Unassigned Tickets</field>
-            <field name="model_id" ref="model_ticket_ticket"/>
-            <field name="domain_force">['|', ('user_id', '=', user.id), ('user_id', '=', False)]</field>
-            <field name="groups" eval="[(4, ref('ticket_management.group_ticket_user'))]"/>
+            <field name="name">User: Own Tickets</field>
+            <field name="model_id" ref="model_ticket_ticket" />
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('ticket_management.group_ticket_user'))]" />
         </record>
 
         <record id="rule_ticket_manager_all" model="ir.rule">
             <field name="name">Manager: All Tickets</field>
-            <field name="model_id" ref="model_ticket_ticket"/>
+            <field name="model_id" ref="model_ticket_ticket" />
             <field name="domain_force">[(1, '=', 1)]</field>
-            <field name="groups" eval="[(4, ref('ticket_management.group_ticket_manager'))]"/>
+            <field name="groups" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
+        </record>
+
+        <record id="rule_ticket_approver_own" model="ir.rule">
+            <field name="name">Approver: Own Tickets</field>
+            <field name="model_id" ref="model_ticket_ticket" />
+            <field name="domain_force">[('approval_user_ids', '=', user.id)]</field>
+            <field name="groups"
+                eval="[(4, ref('ticket_management.group_ticket_user')), (4, ref('ticket_management.group_ticket_manager'))]" />
         </record>
 
     </data>
