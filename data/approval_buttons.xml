@@ -1,61 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data noupdate="1">
-        <!-- Workflow Action Buttons -->
-        <record id="action_button_to_in_progress" model="oi.workflow.button">
-            <field name="name">Move to in Progress</field>
-            <field name="action_type">approve</field>
-            <field name="invisible_condition">state not in ['todo'] or user_id != uid</field>
-            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_user'))]"/>
-            <field name="active" eval="True"/>
-        </record>
+<odoo noupdate="1">
 
-        <record id="action_button_to_testing" model="oi.workflow.button">
-            <field name="name">Move to Testing</field>
-            <field name="action_type">approve</field>
-            <field name="invisible_condition">state not in ['in_progress'] or user_id != uid</field>
-            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_user'))]"/>
-            <field name="active" eval="True"/>
-        </record>
+    <!-- Null -> Draft -->
+    <record id="action_button_null_to_draft" model="approval.buttons">
+        <field name="name">Confirm Ticket</field>
+        <field name="settings_id" ref="approval_settings_ticket_management" />
+        <field name="visible_to">approval</field>
+        <field name="action_type">approve</field>
+        <field name="button_class">btn-success</field>
+        <field name="icon">fa-check-circle</field>
+        <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
+        <field name="invisible">bool(state)</field>
+    </record>
 
-        <record id="action_button_to_resolved" model="oi.workflow.button">
-            <field name="name">Mark As Resolved</field>
-            <field name="action_type">approve</field>
-            <field name="invisible_condition">state not in ['testing'] or responsible_manager_id != uid</field>
-            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]"/>
-            <field name="active" eval="True"/>
-        </record>
+    <!-- Draft -> Todo -->
+    <record id="action_button_to_todo" model="approval.buttons">
+        <field name="name">Move to Todo</field>
+        <field name="settings_id" ref="approval_settings_ticket_management" />
+        <field name="visible_to">approval</field>
+        <field name="action_type">approve</field>
+        <field name="button_class">btn-primary</field>
+        <field name="icon">fa-arrow-right</field>
+        <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
+        <field name="invisible">state not in ['draft'] or responsible_manager_id!=uid</field>
+    </record>
 
-        <record id="action_button_complete" model="oi.workflow.button">
-            <field name="name">Complete</field>
-            <field name="action_type">approve</field>
-            <field name="invisible_condition">state not in ['resolved'] or responsible_manager_id != uid</field>
-            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]"/>
-            <field name="active" eval="True"/>
-        </record>
+    <!-- TODO -> In Progress -->
+    <record id="action_button_to_in_progress" model="approval.buttons">
+        <field name="name">Start Progress</field>
+        <field name="settings_id" ref="approval_settings_ticket_management" />
+        <field name="config_id" ref="approval_todo" />
+        <field name="visible_to">approval</field>
+        <field name="action_type">approve</field>
+        <field name="button_class">btn-primary</field>
+        <field name="icon">fa-play</field>
+        <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_user'))]" />
+        <field name="invisible">state not in ['todo'] or user_id!=uid</field>
+    </record>
 
-        <record id="action_button_return" model="oi.workflow.button">
-            <field name="name">Return to Previous</field>
-            <field name="action_type">reject</field>
-            <field name="invisible_condition">state not in ['todo', 'in_progress', 'testing', 'resolved'] or (user_id != uid and responsible_manager_id != uid)</field>
-            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]"/>
-            <field name="active" eval="True"/>
-        </record>
+    <!-- In Progress ->Testing -->
+    <record id="action_button_to_testing" model="approval.buttons">
+        <field name="name">Submit for Testing</field>
+        <field name="settings_id" ref="approval_settings_ticket_management" />
+        <field name="config_id" ref="approval_in_progress" />
+        <field name="visible_to">approval</field>
+        <field name="action_type">approve</field>
+        <field name="button_class">btn-info</field>
+        <field name="icon">fa-flask</field>
+        <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_user'))]" />
+        <field name="invisible">state not in ['in_progress'] or user_id!=uid</field>
+    </record>
 
-        <record id="action_button_reset_draft" model="oi.workflow.button">
-            <field name="name">Reset to Draft</field>
-            <field name="action_type">reset</field>
-            <field name="invisible_condition">state == 'draft' or not user_can_approve</field>
-            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]"/>
-            <field name="active" eval="True"/>
-        </record>
+    <!-- Testing -> Resolved -->
+    <record id="action_button_to_resolved" model="approval.buttons">
+        <field name="name">Mark As Resolved</field>
+        <field name="settings_id" ref="approval_settings_ticket_management" />
+        <field name="config_id" ref="approval_testing" />
+        <field name="visible_to">approval</field>
+        <field name="action_type">approve</field>
+        <field name="button_class">btn-success</field>
+        <field name="icon">fa-check</field>
+        <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
+        <field name="invisible">state not in ['testing'] or responsible_manager_id!=uid</field>
+    </record>
 
-        <record id="action_button_to_todo" model="oi.workflow.button">
-            <field name="name">Move to TODO</field>
-            <field name="action_type">approve</field>
-            <field name="invisible_condition">state not in ['draft']</field>
-            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]"/>
-            <field name="active" eval="True"/>
-        </record>
-    </data>
+    <!-- Resolved -> Complete -->
+    <record id="action_button_complete" model="approval.buttons">
+        <field name="name">Complete</field>
+        <field name="settings_id" ref="approval_settings_ticket_management" />
+        <field name="config_id" ref="approval_resolved" />
+        <field name="visible_to">approval</field>
+        <field name="action_type">approve</field>
+        <field name="button_class">btn-success</field>
+        <field name="icon">fa-flag-checkered</field>
+        <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
+        <field name="invisible">state not in ['resolved'] or responsible_manager_id!=uid</field>
+    </record>
+
+    <!-- Reset to Draft -->
+    <record id="action_button_reset_draft" model="approval.buttons">
+        <field name="name">Reset to Draft</field>
+        <field name="settings_id" ref="approval_settings_ticket_management" />
+        <field name="action_type">draft</field>
+        <field name="visible_to">approval</field>
+        <field name="button_class">btn-warning</field>
+        <field name="icon">fa-undo</field>
+        <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
+    </record>
+
 </odoo>

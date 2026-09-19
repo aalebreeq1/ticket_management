@@ -15,6 +15,7 @@
             <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
             <field name="condition">True</field>
             <field name="schedule_activity" eval="True" />
+            <field name="user_python_code">result= record.responsible_manager_id</field>
         </record>
 
         <record id="approval_in_progress" model="approval.config">
@@ -25,6 +26,7 @@
             <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_user'))]" />
             <field name="condition">True</field>
             <field name="schedule_activity" eval="True" />
+            <field name="user_python_code">result= record.user_id</field>
         </record>
 
         <record id="approval_testing" model="approval.config">
@@ -35,6 +37,7 @@
             <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
             <field name="condition">True</field>
             <field name="schedule_activity" eval="True" />
+            <field name="user_python_code">result= record.user_id</field>
         </record>
 
         <record id="approval_resolved" model="approval.config">
@@ -45,6 +48,7 @@
             <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
             <field name="condition">True</field>
             <field name="schedule_activity" eval="True" />
+            <field name="user_python_code">result= record.responsible_manager_id</field>
         </record>
     </data>
 </odoo>

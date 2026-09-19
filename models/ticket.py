@@ -43,20 +43,6 @@ class TicketTicket(models.Model):
         tracking=True,
     )
 
-    # @api.model
-    # def _get_manager_domain(self):
-    #     manager_group = self.env.ref('ticket_management.group_ticket_manager', raise_if_not_found=False)
-    #     if manager_group:
-    #         return [('groups_id', 'in', manager_group.id)]
-    #     return []
-
-    # @api.model
-    # def _get_user_domain(self):
-    #     user_group = self.env.ref('ticket_management.group_ticket_user', raise_if_not_found=False)
-    #     if user_group:
-    #         return [('groups_id', 'in', user_group.id)]
-    #     return []
-
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
