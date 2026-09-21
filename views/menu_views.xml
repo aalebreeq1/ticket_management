@@ -15,6 +15,8 @@
             <field name="res_model">ticket.ticket</field>
             <field name="view_mode">kanban,list,form</field>
             <field name="domain">[('user_id', '=', uid)]</field>
+            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_user'))]"/>
+
         </record>
 
         <record id="action_ticket_category" model="ir.actions.act_window">
@@ -52,7 +54,10 @@
             name="My Tickets"
             parent="menu_ticket_operations"
             action="action_ticket_my"
-            sequence="20" />
+            groups="group_ticket_user"
+            sequence="20"
+        />
+
 
         <menuitem id="menu_ticket_configuration"
             name="Configuration"

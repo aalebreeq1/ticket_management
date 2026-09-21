@@ -83,7 +83,7 @@
             <field name="name">ticket.ticket.view.kanban</field>
             <field name="model">ticket.ticket</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="state" class="o_kanban_small_column" sample="1">
+                <kanban default_group_by="state" class="o_kanban_small_column" sample="1" records_draggable="false">
                     <field name="ticket_ref" />
                     <field name="title" />
                     <field name="partner_id"/>
