@@ -88,4 +88,40 @@
         <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
     </record>
 
+    <!--? Any State -> Reject -->
+    <record id="action_button_reject" model="approval.buttons">
+        <field name="name">Reject Ticket</field>
+        <field name="settings_id" ref="approval_settings_ticket_management"/>
+        <field name="action_type">reject</field>
+        <field name="visible_to">approval</field>
+        <field name="button_class">btn-danger</field>
+        <field name="icon">fa-times</field>
+        <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
+        <field name="invisible">state not in ['draft','in_progress','testing'] or responsible_manager_id!=uid</field>
+    </record>
+
+    <!--? Any State -> Cancel -->
+    <record id="action_button_cancel" model="approval.buttons">
+        <field name="name">Cancel Ticket</field>
+        <field name="settings_id" ref="approval_settings_ticket_management" />
+        <field name="action_type">cancel</field>
+        <field name="visible_to">approval</field>
+        <field name="button_class">btn-danger</field>
+        <field name="icon">fa-times-circle</field>
+        <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
+        <field name="invisible">state not in ['draft','in_progress','testing','resolved'] or responsible_manager_id!=uid</field>
+    </record>
+
+    <record id="action_button_return_state" model="approval.buttons">
+        <field name="name">Return to Previous State</field>
+        <field name="settings_id" ref="approval_settings_ticket_management" />
+        <field name="action_type">return</field>
+        <field name="visible_to">approval</field>
+        <field name="button_class">btn-warning</field>
+        <field name="icon">fa-undo</field>
+        <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]" />
+        <field name="invisible">state not in ['in_progress','testing','resolved'] or responsible_manager_id!=uid</field>
+    </record>
+
+
 </odoo>

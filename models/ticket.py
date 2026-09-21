@@ -16,23 +16,26 @@ class TicketTicket(models.Model):
         default=lambda self: _("New"),
     )
     title = fields.Char(string="Ticket Title", required=True, tracking=True)
-    description = fields.Html(string="Description")
-    partner_id = fields.Many2one("res.company", string="Company", tracking=True)
+    description = fields.Html(string="Description", required=True)
+    partner_id = fields.Many2one("res.company", string="Company", tracking=True, required=True)
     
     responsible_manager_id = fields.Many2one(
         "res.users",
         string="Responsible Manager",
         tracking=True,
+        required=True,
         default=lambda self: self.env.user,
+        domain=lambda self: [("group_ids", "in", self.env.ref("ticket_management.group_ticket_manager").id)]
     )
     user_id = fields.Many2one(
         "res.users",
         string="Assigned To",
-        default=lambda self: self.env.user,
         tracking=True,
+        required=True,
+        domain=lambda self: [("group_ids", "in", self.env.ref("ticket_management.group_ticket_user").id)]
     )
-    category_id = fields.Many2one("ticket.category", string="Category")
-    tag_ids = fields.Many2many("ticket.tag", string="Tags")
+    category_id = fields.Many2one("ticket.category", string="Category", required=True)
+    tag_ids = fields.Many2many("ticket.tag", string="Tags", required=True)
 
     approval_user_ids = fields.Many2many("res.users", string="Approval Users")
     

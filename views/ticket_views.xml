@@ -59,12 +59,21 @@
                 <list string="Tickets">
                     <field name="ticket_ref" />
                     <field name="title" />
-                    <field name="partner_id" />
-                    <field name="category_id" />
+                    <field name="partner_id"/>
                     <field name="user_id" widget="many2one_avatar_user" />
                     <field name="responsible_manager_id" widget="many2one_avatar_user" />
-                    <field name="priority" widget="priority" />
-                    <field name="state" widget="badge" />
+                    <field name="state" widget="badge"
+                        decoration-warning="state == 'draft'"
+                        decoration-info="state == 'in_progress'"
+                        decoration-primary="state == 'todo'"
+                        decoration-muted="state == 'testing'"
+                        decoration-success="state in ['approved','resolved']"
+                        decoration-danger="state == 'cancelled'"
+                    />
+                    <field name="category_id" optional="hide" />
+                    <field name="priority" widget="priority" optional="hide" />
+
+
                 </list>
             </field>
         </record>
@@ -77,7 +86,7 @@
                 <kanban default_group_by="state" class="o_kanban_small_column" sample="1">
                     <field name="ticket_ref" />
                     <field name="title" />
-                    <field name="partner_id" />
+                    <field name="partner_id"/>
                     <field name="priority" />
                     <field name="tag_ids" />
                     <field name="user_id" />
@@ -94,7 +103,7 @@
                                     </div>
                                 </div>
                                 <div class="o_kanban_record_body">
-                                    <field name="partner_id" />
+                                    <field name="partner_id"/>
                                     <div>
                                         <field name="tag_ids" widget="many2many_tags"
                                             options="{'color_field': 'color'}" />
