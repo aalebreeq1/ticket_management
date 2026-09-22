@@ -16,7 +16,14 @@
             <field name="view_mode">kanban,list,form</field>
             <field name="domain">[('user_id', '=', uid)]</field>
             <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_user'))]"/>
+        </record>
 
+        <record id ="action_ticket_manager" model="ir.actions.act_window">
+            <field name="name">Managed Tickets</field>
+            <field name="res_model">ticket.ticket</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="domain">[('responsible_manager_id','=', uid)]</field>
+            <field name="group_ids" eval="[(4, ref('ticket_management.group_ticket_manager'))]"/>
         </record>
 
         <record id="action_ticket_category" model="ir.actions.act_window">
@@ -49,8 +56,15 @@
             name="My Tickets"
             parent="menu_ticket_root"
             action="action_ticket_my"
-            groups="ticket_management.group_ticket_user"
+            groups="group_ticket_user"
             sequence="30"
+        />
+        <menuitem id="menu_ticket_manager"
+            name="Managed Tickets"
+            parent="menu_ticket_root"
+            action="action_ticket_manager"
+            groups="group_ticket_manager"
+            sequence="40"
         />
 
 
