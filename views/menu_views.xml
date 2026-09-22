@@ -29,13 +29,13 @@
         <record id="action_ticket_category" model="ir.actions.act_window">
             <field name="name">Categories</field>
             <field name="res_model">ticket.category</field>
-            <field name="view_mode">list,form</field>
+            <field name="view_mode">list</field>
         </record>
 
         <record id="action_ticket_tag" model="ir.actions.act_window">
             <field name="name">Tags</field>
             <field name="res_model">ticket.tag</field>
-            <field name="view_mode">list,form</field>
+            <field name="view_mode">list</field>
         </record>
 
 

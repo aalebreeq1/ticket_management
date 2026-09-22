@@ -1,28 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
-        <record id="ticket_tag_view_form" model="ir.ui.view">
-            <field name="name">ticket.tag.view.form</field>
-            <field name="model">ticket.tag</field>
-            <field name="arch" type="xml">
-                <form string="Tag">
-                    <sheet>
-                        <group>
-                            <field name="name" />
-                            <field name="code" />
-                            <field name="color" widget="color_picker" />
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
         <record id="ticket_tag_view_list" model="ir.ui.view">
             <field name="name">ticket.tag.view.list</field>
             <field name="model">ticket.tag</field>
             <field name="arch" type="xml">
-                <list string="Tags">
+                <list string="Tags" editable="bottom">
                     <field name="name" />
                     <field name="code" />
                     <field name="color" widget="color_picker" />

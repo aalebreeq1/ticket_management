@@ -12,26 +12,33 @@
                         <field name="user_can_approve" invisible="1" />
                     </header>
                     <sheet>
+                        <h3>Ticket Information</h3>
                         <group>
                             <field name="title" placeholder="New Ticket Title..."
                                 readonly="state not in ['draft']" />
                         </group>
-
                         <group>
-                            <group name="left_details">
+                            <group name="left_details" string="Ticket Details">
                                 <field name="partner_id" readonly="state not in ['draft']" />
                                 <field name="category_id" readonly="state not in ['draft']" />
                                 <field name="tag_ids" widget="many2many_tags"
                                     options="{'color_field': 'color'}"
                                     readonly="state not in ['draft']" />
                             </group>
-                            <group name="right_details">
+                            <group name="right_details" string="Assignment &amp; Priority">
                                 <field name="user_id" widget="many2one_avatar_user"
                                     readonly="state not in ['draft']" />
                                 <field name="responsible_manager_id" widget="many2one_avatar_user"
                                     readonly="state not in ['draft']" />
                                 <field name="priority" widget="priority"
                                     readonly="state not in ['draft']" />
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Dates">
+                                <field name="start_date" />
+                                <field name="end_date" />
+                                <field name="duration_in_hours" />
                             </group>
                         </group>
                         <notebook>
@@ -59,7 +66,7 @@
                 <list string="Tickets">
                     <field name="ticket_ref" />
                     <field name="title" />
-                    <field name="partner_id"/>
+                    <field name="partner_id" />
                     <field name="user_id" widget="many2one_avatar_user" />
                     <field name="responsible_manager_id" widget="many2one_avatar_user" />
                     <field name="state" widget="badge"
@@ -70,6 +77,9 @@
                         decoration-success="state in ['approved','resolved']"
                         decoration-danger="state == 'cancelled'"
                     />
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="duration_in_hours" />
                     <field name="category_id" optional="hide" />
                     <field name="priority" widget="priority" optional="hide" />
 
@@ -83,10 +93,11 @@
             <field name="name">ticket.ticket.view.kanban</field>
             <field name="model">ticket.ticket</field>
             <field name="arch" type="xml">
-                <kanban default_group_by="state" class="o_kanban_small_column" sample="1" records_draggable="false">
+                <kanban default_group_by="state" class="o_kanban_small_column" sample="1"
+                    records_draggable="false">
                     <field name="ticket_ref" />
                     <field name="title" />
-                    <field name="partner_id"/>
+                    <field name="partner_id" />
                     <field name="priority" />
                     <field name="tag_ids" />
                     <field name="user_id" />
@@ -103,7 +114,7 @@
                                     </div>
                                 </div>
                                 <div class="o_kanban_record_body">
-                                    <field name="partner_id"/>
+                                    <field name="partner_id" />
                                     <div>
                                         <field name="tag_ids" widget="many2many_tags"
                                             options="{'color_field': 'color'}" />
