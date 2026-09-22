@@ -38,24 +38,19 @@
             name="Tickets"
             sequence="10" />
 
-        <menuitem id="menu_ticket_operations"
-            name="Tickets"
-            parent="menu_ticket_root"
-            sequence="10" />
-
         <menuitem id="menu_ticket_all"
             name="All Tickets"
-            parent="menu_ticket_operations"
+            parent="menu_ticket_root"
             action="action_ticket_all"
             groups="group_ticket_manager"
-            sequence="10" />
+            sequence="20" />
 
         <menuitem id="menu_ticket_my"
             name="My Tickets"
-            parent="menu_ticket_operations"
+            parent="menu_ticket_root"
             action="action_ticket_my"
-            groups="group_ticket_user"
-            sequence="20"
+            groups="ticket_management.group_ticket_user"
+            sequence="30"
         />
 
 
