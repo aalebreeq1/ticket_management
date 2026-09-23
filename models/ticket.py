@@ -1,12 +1,11 @@
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError, UserError
 
 
 class TicketTicket(models.Model):
     _name = "ticket.ticket"
     _description = "Support Ticket"
     _inherit = ["approval.record", "mail.thread", "mail.activity.mixin"]
-    _rec_name="ticket_ref"
+    _rec_name = "ticket_ref"
 
     ticket_ref = fields.Char(
         string="Ticket Reference",
@@ -28,7 +27,7 @@ class TicketTicket(models.Model):
         tracking=True,
         required=True,
         default=lambda self: self.env.user,
-        readonly=True
+        readonly=True,
     )
     user_id = fields.Many2one(
         "res.users",
@@ -44,6 +43,7 @@ class TicketTicket(models.Model):
 
     approval_user_ids = fields.Many2many("res.users", string="Approval Users")
 
+    
     priority = fields.Selection(
         [("0", "Low"), ("1", "Normal"), ("2", "High"), ("3", "Very High")],
         string="Priority",
@@ -51,37 +51,43 @@ class TicketTicket(models.Model):
         tracking=True,
     )
 
-
-    def setStartDate(self):
-        for record in self:
-            if record.start_date is None and record.state == "in_progress":
-                record.start_date = fields.Datetime.now()
-
     start_date = fields.Datetime(
         string="Start Date",
         readonly=True,
         help="The start date will be set when the ticket state moved to  In Progress",
-        default=lambda self: self.setStartDate()
     )
-    
-    def setFinishDate(self):
-        for record in self:
-            if record.end_date is None and record.state == "resolved":
-                record.end_date = fields.Datetime.now()
-                
+
     end_date = fields.Datetime(
         string="End Date",
         readonly=True,
         help="The end date will be set when the ticket state moved to resolved",
-        default=lambda self: self.setFinishDate()
     )
     duration_in_hours = fields.Float(
         string="Duration (Hours)",
         readonly=True,
         compute="_compute_duration_in_hours",
-        sudo_compute=True,
         help="The duration will be calculated based on the start and end dates",
     )
+
+    def set_start_date(self):
+        for record in self:
+            if record.state == "in_progress" and not record.start_date:
+                record.start_date = fields.Datetime.now()
+                record.end_date = None
+                record.duration_in_hours = None 
+    def set_end_date(self):
+        for record in self:
+            if record.state in ["resolved",'approved'] and not record.end_date:
+                record.end_date = fields.Datetime.now()
+    
+    def write(self, vals):
+        res = super().write(vals)
+        if "state" in vals:
+            if vals["state"] == "in_progress":
+                self.set_start_date()
+            elif vals["state"] in ["resolved",'approved']:
+                self.set_end_date()
+        return res
 
     @api.depends("start_date", "end_date")
     def _compute_duration_in_hours(self):

@@ -1,7 +1,5 @@
 from odoo import models, fields
 from odoo import api
-from odoo.exceptions import ValidationError
-
 
 class Category(models.Model):
     _name = "ticket.category"
