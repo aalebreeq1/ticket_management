@@ -80,6 +80,13 @@ class TicketTicket(models.Model):
             if record.state in ["resolved", "approved"] and not record.end_date:
                 record.end_date = fields.Datetime.now()
 
+    def reset_dates(self):
+        for record in self:
+            if record.state in ["draft", "cancelled"]:
+                record.start_date = None
+                record.end_date = None
+                record.duration_in_hours = None
+
     def write(self, vals):
         res = super().write(vals)
         if "state" in vals:
@@ -87,6 +94,8 @@ class TicketTicket(models.Model):
                 self.set_start_date()
             elif vals["state"] in ["resolved", "approved"]:
                 self.set_end_date()
+            elif vals["state"] in ["draft", "cancelled", "todo"]:
+                self.reset_dates()
         return res
 
     @api.depends("start_date", "end_date")
