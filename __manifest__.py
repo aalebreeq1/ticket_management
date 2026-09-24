@@ -7,7 +7,7 @@
     'category': 'Services/Helpdesk',
     'license': 'AGPL-3',
     'depends': [
-        'oi_workflow'
+        'oi_workflow',
     ],
     'data': [
         'security/ticket_security.xml',

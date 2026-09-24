@@ -43,7 +43,6 @@ class TicketTicket(models.Model):
 
     approval_user_ids = fields.Many2many("res.users", string="Approval Users")
 
-    
     priority = fields.Selection(
         [("0", "Low"), ("1", "Normal"), ("2", "High"), ("3", "Very High")],
         string="Priority",
@@ -74,18 +73,19 @@ class TicketTicket(models.Model):
             if record.state == "in_progress" and not record.start_date:
                 record.start_date = fields.Datetime.now()
                 record.end_date = None
-                record.duration_in_hours = None 
+                record.duration_in_hours = None
+
     def set_end_date(self):
         for record in self:
-            if record.state in ["resolved",'approved'] and not record.end_date:
+            if record.state in ["resolved", "approved"] and not record.end_date:
                 record.end_date = fields.Datetime.now()
-    
+
     def write(self, vals):
         res = super().write(vals)
         if "state" in vals:
             if vals["state"] == "in_progress":
                 self.set_start_date()
-            elif vals["state"] in ["resolved",'approved']:
+            elif vals["state"] in ["resolved", "approved"]:
                 self.set_end_date()
         return res
 

@@ -10,7 +10,7 @@ class Tag(models.Model):
     code = fields.Char(
         string="Code",
         required=True,
-        help="this field is for the technical name of the tag avoid using spaces and use lowercase characters only EX: 'new_tag'",
+        help="this field is for the technical name of the tag avoid using spaces and use lowercase characters only EX: 'new_tag'"
     )
     name = fields.Char(string="Tag", required=True)
     color = fields.Integer(string="Color")
